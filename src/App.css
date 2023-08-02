@@ -1,6 +1,7 @@
 body{
   background-color: rgb(255, 255, 255);
   font-family: poppins;
+  font-size: larger;
 }
 *{
   box-sizing: border-box;
