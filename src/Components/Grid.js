@@ -1,4 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
+import { oneEmptyCheck, findOneNo } from '../modules/oneElement';
+import { elimination, maxRepetation } from '../modules/findThird';
+import {row_Prob, col_Prob, box_Prob} from '../modules/Probability';
 
 
 export default function Grid() {
@@ -10,7 +13,7 @@ export default function Grid() {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0]
     ]
     // let [disable, setDisable] = useState(true);
 
@@ -25,13 +28,13 @@ export default function Grid() {
         }
     }, [])
 
-    let set_value = async () => {
+    const set_value = async () => {
         // console.log("set_value working")
         let i = 0
         let j = 0
         let grid = await document.getElementsByClassName("inp");
         for (let k = 0; k < 81; k++) {
-            values[i][j] = (grid[k].value === "") ? 0 : grid[k].value;
+            values[i][j] = (grid[k].value === "") ? 0 : parseInt(grid[k].value);
             j++;
             if (j === 9) {
                 j = 0;
@@ -41,30 +44,15 @@ export default function Grid() {
         // console.log(values)
     }
 
-    let lock_no = async () => {
-
-
-        for (let i = 1; i <= 9; i++) {
-            for (let j = 1; j <= 9; j++) {
-                if (document.getElementById(`r${j}c${i}`).value !== '') {
-                    document.getElementById(`r${j}c${i}`).style.color = 'blue';
-                    document.getElementById(`r${j}c${i}`).disabled = true;
-                }
-            }
-        }
-        set_value()
-    }
-
-    let isValid = (id) => {
+    const isValid = (id) => {
         let row = parseInt(id.charAt(1)) - 1;
         let col = parseInt(id.charAt(3)) - 1;
         let flag = false;
-        let value = document.getElementById(id).value;
+        let value = parseInt(document.getElementById(id).value);
         // console.log(`row:${row} and col:${col} and flag:${flag} and value:${value}`)
         for (let i = 0; i < 9; i++) {
             if (value === values[row][i] || value === values[i][col]) {
                 flag = true;
-                // console.log(true)
                 break
             }
         }
@@ -85,106 +73,49 @@ export default function Grid() {
         }
     }
 
-    let checkRow = (no, row) => {
-        for (let i = 0; i < 9; i++) {
-            if (values[row][i] === no) {
-                return true
-            }
-        }
-        return false
-    }
-
-    let checkCol = (no, col) => {
-        for (let i = 0; i < 9; i++) {
-            if (values[i][col] === no) {
-                return true
-            }
-        }
-        return false
-    }
-
-    let checkBox = (no, bno) => {
-        row, col = [[0, 0], [0, 3], [0, 6], [3, 0], [3, 3], [3, 6], [6, 0], [6, 3], [6, 6]][bno]
-        for (let i = row; i < row + 3; i++) {
-            for (let j = col; j < col + 3; j++) {
-                if (values[i][j] === no) {
-                    return true
+    const lock_no = async () => {
+        for (let i = 1; i <= 9; i++) {
+            for (let j = 1; j <= 9; j++) {
+                if (document.getElementById(`r${j}c${i}`).value !== '') {
+                    document.getElementById(`r${j}c${i}`).style.color = 'blue';
+                    document.getElementById(`r${j}c${i}`).disabled = true;
+                }
+                else {
+                    document.getElementById(`r${j}c${i}`).style.color = 'green';
                 }
             }
-        }
-        return false
-    }
-    let createColArr = (col)=>{
-        arr = [];
-        for(let j=0; j<9; i++){
-            arr.push(values[j][col]);
-        }
-        return arr
-    }
-    let oneEmptyCheck = (empty) => {
-        let count = (arr)=>{
-            let c = 0;
-            for (let i in arr){
-                c = (arr[i] === 0)? c+1 : c;
-            }
-            return c;
-        }
-
-        for (let i = 0; i < 9; i++) {
-            if (count(values[i]) === empty ){
-                return {which: 'r', where: i, index: values[i].indexOf(0)};
-            }
-        }
-
-        for (let i = 0; i < 9; i++) {
-            arr = createColArr(i)
-            if(count(arr) === empty){
-                return {which: 'c', where: i, index: arr.indexOf(0)}
-            }
-        }
-
-        for (let k = 0; k < 9; k++) {
-            row, col = [[0, 0], [0, 3], [0, 6], [3, 0], [3, 3], [3, 6], [6, 0], [6, 3], [6, 6]][k];
-            let count = 0;
-            for (let i = row; i < row + 3; i++) {
-                if (count(values[i].slice(col, col+3)) === empty){
-                    return {which: 'b', where: k, row: i, col: values[i].slice(col, col+3).indexOf(0)}
-                }
-            }
-        }
-        return false;
-    }
-
-    let findOneNo = (info) =>{
-        // {which: 'r', where: i, index: values[i].indexOf(empty)};
-        nos = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-        let missing = (value)=>{
-            for (let i in values[info.where]){
-                if( values[info.where][i] === value){
-                    return false
-                }
-            }
-            return true
-        }
-
-        if(info.which === 'r'){
-            let filtered = nos.filter(missing)[0];
-            values[info.where][info.index] = filtered;
-            return
-        }
-        if(info.which === 'c'){
-            let 
         }
     }
 
     let logicLoop = () => {
-        let success = true
-        while (success === true) {
-            let isOneEmpty = oneEmptyCheck(1);
-            if(isOneEmpty){
-                findOneNo(isOneEmpty)
-            }
+        console.log("start")
+        // console.log("values: "+values)
+        console.log("\n One empty check")
+        let isOneEmpty = oneEmptyCheck(values);
+        console.log(isOneEmpty);
+        if (isOneEmpty) {
+            findOneNo(isOneEmpty, values)
+            // update_value()
         }
+        console.log("checked one time\n\n maxRepetation check")
+        
+        let toCheck = maxRepetation(values);
+        for (let i in toCheck) {
+            elimination(toCheck[i], values)
+        }
+        console.log("checked max repetation\n\n row probability")
+        row_Prob(values)
+        console.log("checked row probability \n\n col probability")
+        col_Prob(values)
+        console.log("checked col probability \n\n box probability")
+        box_Prob(values)
+        console.log("checked box probability")
+
+        // console.log(values)
+        
+        // if (oneEmptyCheck(values)){continue}
+        console.log("stop")
+
     }
 
     return (<>
@@ -290,6 +221,7 @@ export default function Grid() {
             </div>
         </div>
         <button id="btn-lock" onClick={lock_no}>Lock</button>
+        <button id="btn-logic" onClick={logicLoop}>Next</button>
     </>
     )
 }
