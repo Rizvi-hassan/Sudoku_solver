@@ -65,11 +65,32 @@ export default function Grid() {
             }
         }
         if (flag === true) {
-            alert("Wrong input");
-            document.getElementById(id).value = "";
+            // alert("Wrong input");
+            document.getElementById(id).style.color = "red";
+            // document.getElementById(id).border = "";
         }
         else {
+            document.getElementById(id).style.color = "black";
             set_value()
+        }
+    }
+
+    const reset_no = async() =>{
+        values = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ]
+        let grid = await document.getElementsByClassName("inp");
+        for (let k = 0; k < 81; k++) {
+            grid[k].value = '';
+            grid[k].style.color = 'black';
+
         }
     }
 
@@ -220,8 +241,11 @@ export default function Grid() {
                 <div className="col col-css" ><input id="r9c9" onInput={() => { isValid('r9c9') }} type="number" className="inp" autoComplete="off" /></div>
             </div>
         </div>
-        <button id="btn-lock" onClick={lock_no}>Lock</button>
-        <button id="btn-logic" onClick={logicLoop}>Next</button>
+        <div className="container" style={{textAlign: 'center'}}>
+            <button id="btn-lock" onClick={reset_no}>Reset</button>
+            <button id="btn-lock" onClick={lock_no}>Lock</button>
+            <button id="btn-logic" onClick={logicLoop}>Next</button>
+        </div>
     </>
     )
 }

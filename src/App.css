@@ -1,30 +1,86 @@
-body{
-  background-color: rgb(255, 255, 255);
-  font-family: poppins;
-  font-size: larger;
-}
-*{
-  box-sizing: border-box;
+* {
+    box-sizing: border-box;
 }
 
-.col-css{
-  padding: 0  !important;
-  height: 40px;
-  width: 39px;
-  border: 1px solid rgb(48, 48, 48);
+body {
+    background-color: rgb(255, 255, 255);
+    font-family: poppins;
+    font-size: larger;
 }
 
-.inp{
-  margin: 0% !important;
-  width: 38px;
-  height: 38px;
-  background: transparent;
-  border: 0;
-  text-align: center;
+body::before {
+    position: fixed;
+    content: "";
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: url("../public/bg.png") no-repeat content-box;
+    z-index: -111;
+    opacity: 0.4;
+}
+
+.col-css {
+    padding: 0 !important;
+    height: 40px;
+    width: 39px;
+    border: 1px solid rgb(48, 48, 48);
+}
+
+.inp {
+    margin: 0% !important;
+    width: 38px;
+    height: 38px;
+    background: transparent;
+    border: 0;
+    text-align: center;
+    font-weight: 700;
+    font-size: 25px;
 }
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+button {
+    display: inline;
+    position: relative;
+    margin: 10px 10px;
+    font-weight: 700;
+    width: 100px;
+    background: #9ae3e7;
+    border-radius: 8px;
+    box-shadow: 5px 5px black;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+button:active {
+    box-shadow: none;
+    transform: translate(5px, 5px);
+}
+
+.info {
+    position: absolute;
+    width: 362px;
+    background: #9ae3e7;
+    border: 2px solid;
+    border-radius: 8px;
+    box-shadow: 5px 5px black;
+    font-size: 15px;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    padding: 10px;
+    font-weight: 500;
+    z-index: 100;
+}
+
+.close{
+  position: absolute;
+  width: 20px;
+  top: 4%;
+  right: 3%;
+  cursor: pointer;
 }
