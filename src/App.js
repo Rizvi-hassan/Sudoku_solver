@@ -12,7 +12,7 @@ import {
 
 
 function App() {
-  let [mode, setMode] = useState({left: '37px', width: '104px'});
+  let [mode, setMode] = useState({left: '37px', width: '106px'});
   let [info, setInfo] = useState(true);
   const changeInfo = () =>{
     setInfo(false);
