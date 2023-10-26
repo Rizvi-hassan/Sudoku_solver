@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { oneEmptyCheck, findOneNo } from '../modules/oneElement';
 import { elimination, maxRepetation } from '../modules/findThird';
 import {row_Prob, col_Prob, box_Prob} from '../modules/Probability';
 import cross from '../cross.png'
 
 
-export default function Grid() {
+export default function Grid(props) {
+
+
     let values = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -16,7 +18,7 @@ export default function Grid() {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0]
     ]
-    // let [disable, setDisable] = useState(true);
+    // props.changeMode({left: '0px', width: '80px'})
 
     useEffect(() => {
         for (let i = 3; i < 9; i += 3) {
@@ -141,13 +143,13 @@ export default function Grid() {
     }
 
     return (<>
-    <div className="info" id='info'>
+    {props.info && <div className="info" id='info'>
         <h3>How To Solve?</h3>
-        <img src={cross} alt="error" className="close" onClick={() => { document.getElementById('info').style.display = 'none' }} />
+        <img src={cross} alt="error" className="close" onClick={() => { document.getElementById('info').style.display = 'none'; props.changeInfo(false); console.log(info) }} />
         <p>1.Enter all the numbers of the questions in their corresponding boxes.</p>
         <p>2.Click on <kbd>Lock</kbd> to lock the numbers.</p>
         <p>3.Click on <kbd>Next</kbd> until all the boxes are filled with answers.</p>
-      </div>
+      </div>}
         <div className="container text-center" style={{ width: '359px', border: '4px solid black' }}>
             <div className="row row-css" id="r1">
                 <div className="col col-css" ><input id="r1c1" onInput={() => { isValid('r1c1') }} type="number" className="inp" autoComplete="off" /></div>

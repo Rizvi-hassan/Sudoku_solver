@@ -12,19 +12,19 @@ export default function GridManual() {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0]
     ]
-    // let [disable, setDisable] = useState(true);
-
+    
     useEffect(() => {
         for (let i = 3; i < 9; i += 3) {
             document.getElementById(`r${i}`).style.borderBottom = '2px solid black';
         }
         // for (let i = 3; i <= 6; i += 3) {
-        //     for (let j = 1; j <= 9; j++) {
-        //         document.getElementById(`r${j}c${i}`).style.borderRight = '2px solid black';
+            //     for (let j = 1; j <= 9; j++) {
+            //         document.getElementById(`r${j}c${i}`).style.borderRight = '2px solid black';
         //     }
         // }
     }, [])
-
+    
+    // props.changeMode({left: '0px', width: '80px'});
     const set_value = async () => {
         // console.log("set_value working")
         let i = 0

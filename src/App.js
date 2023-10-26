@@ -1,34 +1,42 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
-import Grid from './Components/Grid'
+import Grid from './Components/Grid'  
 import GridManual from './Components/gridManual'
 
 import {
-    BrowserRouter as Router,
+    // BrowserRouter as Router,
     Routes,
     Route,
-  Link
-} from 'react-router-dom';
+    Link
+} from "react-router-dom";
+
 
 function App() {
-  // let [mode, setMode] = useState({left: '0px', width: '80px'});
+  let [mode, setMode] = useState({left: '37px', width: '104px'});
+  let [info, setInfo] = useState(true);
+  const changeInfo = () =>{
+    setInfo(false);
+  }
+
+  // const changeMode = (value) =>{
+  //   setMode(value);
+  // }
   
   return (
     <>
       <div className="container">
         <h1 className="text-center" style={{ fontWeight: '900', textShadow: '5px 5px 2px #64a0a3', padding: '10px 0' }}>SUDOKU SOLVER</h1></div>
-      <Router>
-        <div className="container navbar" style={{width: '180px'}}>
-          <Link to="/" className='link' id= 'link1' >Automatic</Link>
-          <Link to="/manual" className='link' id= 'link2' >Manual</Link>
-          <span className="underline" style={{left: '0px', width: '80px'}}></span>
+        <div className="container navbar" style={{width: '350px'}}>
+          <Link to="/" className='link' onClick={()=>{setMode({left: '37px', width: '106px'})}}>Automatic</Link>
+          <Link to="manual" className='link' onClick={()=>{setMode({left: '235px', width: '77px'})}}>Manual</Link>
+          <span className="underline" style={mode}></span>
         </div>
+
         <Routes>
-          <Route path='/' element={<Grid />} />
-          <Route path='manual' element={<GridManual />} />
+          <Route path='/' element={<Grid info = {info} changeInfo = {changeInfo}/>}/>
+          <Route path='manual' element={<GridManual  />} />
         </Routes>
-      </Router>
-      
+        {/* <Grid/> */}
     </>
   );
 }
