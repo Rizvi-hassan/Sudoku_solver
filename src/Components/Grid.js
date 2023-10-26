@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { oneEmptyCheck, findOneNo } from '../modules/oneElement';
 import { elimination, maxRepetation } from '../modules/findThird';
 import {row_Prob, col_Prob, box_Prob} from '../modules/Probability';
@@ -145,7 +145,7 @@ export default function Grid(props) {
     return (<>
     {props.info && <div className="info" id='info'>
         <h3>How To Solve?</h3>
-        <img src={cross} alt="error" className="close" onClick={() => { document.getElementById('info').style.display = 'none'; props.changeInfo(false); console.log(info) }} />
+        <img src={cross} alt="error" className="close" onClick={() => { document.getElementById('info').style.display = 'none'; props.changeInfo(false) }} />
         <p>1.Enter all the numbers of the questions in their corresponding boxes.</p>
         <p>2.Click on <kbd>Lock</kbd> to lock the numbers.</p>
         <p>3.Click on <kbd>Next</kbd> until all the boxes are filled with answers.</p>
